@@ -3,6 +3,7 @@ import graphene
 import json
 import pprint
 import time
+import graphql_queries
 from top8 import Top8
 api_token = 'eb81ad79e7fd95db2ede0470cac03757'
 
@@ -105,53 +106,53 @@ def get_ids(slug):
     return melee_id, top_8_id
 
 
-def get_top_8(melee_id, top_8_id):
-    event_query = '''
-    query PhaseSets($phaseId: ID!, $page:Int!, $perPage:Int!){
-    phase(id:$phaseId){
-        id
-        name
-        sets(
-          page: $page
-          perPage: $perPage
-          sortType: STANDARD
-        ){
-          pageInfo{
-            total
-          }
-          nodes{
-            winnerId
-            round
-            fullRoundText
-            completedAt
-            id
-            games{
-                winnerId
-            }
-            slots{
-              id
-              standing{
-                placement
-              }
-              entrant{
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }'''
-
-    event_vars = {
-    'phaseId': top_8_id,
-    'page': '1',
-    'perPage':'100'
-    }
-
-    res = query(event_query, event_vars)
-    # pp.pprint(res)
-    return res
+# def get_top_8(melee_id, top_8_id):
+#     event_query = '''
+#     query PhaseSets($phaseId: ID!, $page:Int!, $perPage:Int!){
+#     phase(id:$phaseId){
+#         id
+#         name
+#         sets(
+#           page: $page
+#           perPage: $perPage
+#           sortType: STANDARD
+#         ){
+#           pageInfo{
+#             total
+#           }
+#           nodes{
+#             winnerId
+#             round
+#             fullRoundText
+#             completedAt
+#             id
+#             games{
+#                 winnerId
+#             }
+#             slots{
+#               id
+#               standing{
+#                 placement
+#               }
+#               entrant{
+#                 id
+#                 name
+#               }
+#             }
+#           }
+#         }
+#       }
+#     }'''
+#
+#     event_vars = {
+#     'phaseId': top_8_id,
+#     'page': '1',
+#     'perPage':'100'
+#     }
+#
+#     res = query(event_query, event_vars)
+#     # pp.pprint(res)
+#     return res
 
 def find_changes(new_top8, old_top8):
     x=0
@@ -179,6 +180,11 @@ def main(slug):
 
 
 if __name__ == '__main__':
-    # get_tourney_top_3('evo-2018')
-    main('low-tier-city-7')
+    slug = 'automation-test-tournament'
+    slug = 'evo-2018'
+    melee_id, top_8_id = graphql_queries.get_tournament(slug, False)
+    print(melee_id)
+    res = graphql_queries.get_top_8(melee_id, top_8_id)
+    pp.pprint(res)
+    # main('low-tier-city-7')
     # main('?evo-2018')

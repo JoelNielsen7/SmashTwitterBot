@@ -1,0 +1,5 @@
+boto3
+pprint
+requests
+requests_oauthlib
+python-twitter
