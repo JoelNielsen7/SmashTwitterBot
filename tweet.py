@@ -2,12 +2,32 @@ import os
 import json
 import requests
 import twitter
+import boto3
 
 def tweet_library(message, reply = None, tweeter = None):
-    api = twitter.Api(consumer_key='oOkLIKSCZMNjiZeF7gVTQQNNE',
-                      consumer_secret='Su7dfAiQyIbgOKFGilanaxkzha5aMwERsAtSPaoz9Lrchp2uJj',
-                      access_token_key='1149863023349288960-ISG9TdC9LoBtmvww0ibU3lFu3dvQ2G',
-                      access_token_secret='zyM2NUOu8PDwDOt6Izi01N2tZ7h2JGmf9y4SxIMpd98Xc')
+    #do this so I don't post twitter credentials to github 
+    client = boto3.client('ssm')
+    params = client.get_parameters_by_path(
+    Path='/tweet/',
+    Recursive=True,
+    WithDecryption=True,
+    MaxResults=10,
+    )
+    for param in params['Parameters']:
+        if param['Name'] == '/tweet/consumer_key':
+            consumer_key = param['Value']
+        elif param['Name'] == '/tweet/consumer_secret':
+            consumer_secret = param['Value']
+        elif param['Name'] == '/tweet/access_token_key':
+            access_token_key = param['Value']
+        elif param['Name'] == '/tweet/access_token_secret':
+            access_token_secret = param['Value']
+
+    api = twitter.Api(consumer_key=consumer_key,
+                      consumer_secret=consumer_secret,
+                      access_token_key=access_token_key,
+                      access_token_secret=access_token_secret)
+    # return
     if reply == None:
         res = api.PostUpdate(message)
     else:
