@@ -1,1 +1,2 @@
 # SmashTwitterBot
+![Diagram](diagram.png)
