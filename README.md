@@ -1,7 +1,12 @@
 # SmashTwitterBot
 ![Diagram](diagram.png)
-
+Twitter tag:\@melee_results 
 How does it work?
+**The short version**
+When someone mentions the twitter bot in a tweet along with the name of a tournament,
+it will tweet live updates of the finals of that tournament.
+
+**The long version**
 There are two main parts to the program:
 1. The watcher
 2. The scanner

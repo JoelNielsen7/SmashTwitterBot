@@ -51,16 +51,16 @@ def lambda_handler(event, context):
             )
             item['slug'] = tourney['slug']
             item['ultimate'] = tourney['ultimate']
-            if active == 2:
+            if active == 3:
                 item['active'] = 'N'
             else:
                 item['active'] = 'Y'
             item['event_id'] = event_id
             item['top_8_id'] = top_8_id
-            table.put_item(
+            res = table.put_item(
                 Item=item
             )
-
+            print(res)
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')

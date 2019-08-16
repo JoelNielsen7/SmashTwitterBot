@@ -205,8 +205,9 @@ def get_top_8(melee_id, top_8_id):
     return res
 
 if __name__ == '__main__':
-    melee_id, top_8_id, state = get_tournament('automation-test-tournament', False)
-    pp.pprint(get_top_8(melee_id, top_8_id))
+    melee_id, top_8_id, state = get_tournament('super-smash-con-2019', False)
+    print(state)
+    # pp.pprint(get_top_8(melee_id, top_8_id))
     # print(get_tournament('super-smash-con-2019', False))
     # print(get_tournament_by_name('Evo 2018'))
     # print(get_tournament('evo-2019', True))

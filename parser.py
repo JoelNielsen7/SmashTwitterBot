@@ -82,6 +82,7 @@ def find_differences(old_data, new_data):
                                 else:
                                     winner = player['entrant']['name']
                             change_tuple = (winner, loser, count, round_good)
+                            print(change_tuple)
 
                             changes.append(change_tuple)
                 except:
